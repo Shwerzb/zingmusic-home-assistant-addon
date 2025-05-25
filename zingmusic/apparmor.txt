@@ -1,0 +1,26 @@
+profile zingmusic_addon flags=(attach_disconnected,mediate_deleted) {
+  capability setgid,
+  capability setuid,
+  capability sys_admin,
+  capability dac_read_search,
+
+  file,
+  signal,
+  mount,
+  umount,
+  remount,
+
+  network udp,
+  network tcp,
+  network dgram,
+  network stream,
+  network seqpacket,
+  network inet,
+  network inet6,
+  network netlink raw,
+  network unix dgram,
+
+  /tmp/** mrkwl,
+  /data/** rw,
+  /media/** rw,
+}
