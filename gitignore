@@ -1,4 +1,27 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Virtual environments
 venv/
+.env/
+
+# Logs and output
+*.log
+*.sqlite3
+.cache/
+.cache.db
+
+# HA add-on backups and user data
+collage_images/
+backup/
+tmp/
+
+# VS Code and JetBrains IDEs
+.vscode/
+.idea/
+
+# Docker
+*.tar
+*.img
