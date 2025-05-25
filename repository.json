@@ -1,5 +1,5 @@
 {
-    "name": "Music Assistant",
-    "url": "https://github.com/music-assistant/core",
-    "maintainer": "Music Assistant <marcelveldt@users.noreply.github.com>"
-  }
+  "name": "ZingMusic Add-ons",
+  "url": "https://github.com/Shwerzb/zingmusic-home-assistant-addon",
+  "maintainer": "Shwerzb <you@example.com>"
+}
