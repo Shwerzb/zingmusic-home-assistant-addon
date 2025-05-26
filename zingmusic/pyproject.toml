@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "zingmusic-assistant"
 version = "1.0.0"
-description = "A custom Music Assistant server including the ZingMusic provider"
+description = "Custom Music Assistant server with ZingMusic provider"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
@@ -15,12 +15,13 @@ authors = [
 dependencies = [
   "aiohttp>=3.8",
   "aiofiles>=23.1",
-  "music-assistant-models>=1.1.0",
+  "aiosqlite",                      # ✅ Fixes the error
   "zeroconf>=0.132.2",
   "jinja2",
   "typing-extensions",
   "setuptools",
-  "python-slugify"
+  "python-slugify",
+  "music-assistant-models>=1.1.0"
 ]
 
 [project.urls]
