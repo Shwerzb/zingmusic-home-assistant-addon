@@ -3,28 +3,16 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
-*.egg-info/
 
-# Ignore virtual environments
 env/
 venv/
-ENV/
-VENV/
-
-# Ignore Git
 .git
 .gitignore
-
-# Ignore system files
 .DS_Store
 Thumbs.db
 
-# Ignore test data
 tests/
-*.test.*
-*.spec.*
 
-# Only allow needed files
 !dist/
 !dist/*
 !run.sh
