@@ -1,41 +1,28 @@
 # syntax=docker/dockerfile:1
-
-ARG BASE_IMAGE_VERSION=latest
-FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION AS builder
+FROM ghcr.io/home-assistant/amd64-base-python:3.11-alpine
 
 WORKDIR /app
 
-# Install base Python packaging tools
-RUN pip install --upgrade pip setuptools wheel
+# Install build dependencies
+RUN apk add --no-cache build-base libffi-dev openssl-dev musl-dev
 
-# Copy your built wheel and requirements
-COPY dist/*.whl /app/music_assistant.whl
+# Copy dependency definitions
 COPY requirements_all.txt .
 
-# Install requirements and your app's wheel
-RUN pip install --no-cache-dir -r requirements_all.txt && \
-    pip install --no-cache-dir /app/music_assistant.whl
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements_all.txt
 
-# Set correct permissions
-RUN chmod -R 777 /app
+# Copy prebuilt wheel
+COPY dist/*.whl /app/music_assistant.whl
 
-####################################################################
+# Install the main package
+RUN pip install --no-cache-dir /app/music_assistant.whl
 
-# Final image
-FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION
-
-WORKDIR /app
-
-# Copy all from builder
-COPY --from=builder /app /app
-
-# Add and allow run.sh
+# Copy runtime files
 COPY run.sh /app/run.sh
+
+# Set execution permissions
 RUN chmod +x /app/run.sh
 
-ENV PATH="/app/venv/bin:$PATH"
-
-VOLUME ["/data"]
-EXPOSE 8095
-
+# Startup command
 CMD ["/app/run.sh"]
