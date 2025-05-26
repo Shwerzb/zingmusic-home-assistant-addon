@@ -3,20 +3,17 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Copy dependency file and install dependencies
+# Install pip requirements
 COPY pyproject.toml ./
-COPY requirements_all.txt ./
+COPY ./music_assistant ./music_assistant
+COPY ./zingmusic_provider ./zingmusic_provider
 
-# Install Python dependencies (including Music Assistant Models, etc.)
-RUN pip install --no-cache-dir -r requirements_all.txt
+# Install your local package (editable mode)
+RUN pip install --no-cache-dir .
 
-# Copy main application source
-COPY ./music_assistant /app/music_assistant
-COPY ./zingmusic_provider /app/zingmusic_provider
-
-# Copy and make run script executable
+# Copy the startup script
 COPY run.sh /app/run.sh
 RUN chmod +x /app/run.sh
 
-# Run the application
+# Launch the server
 CMD ["/app/run.sh"]
