@@ -1,34 +1,23 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "zingmusic-assistant"
+name = "music_assistant"
 version = "1.0.0"
-description = "Custom Music Assistant server with ZingMusic provider"
+description = "Custom Music Assistant with ZingMusic provider"
+authors = [{name = "Shmily Werzberger", email = "you@example.com"}]
 readme = "README.md"
-requires-python = ">=3.9"
-license = { text = "MIT" }
-authors = [
-  { name = "Shmiel Werzberger", email = "you@example.com" }
-]
-dependencies = [
-  "aiohttp>=3.8",
-  "aiofiles>=23.1",
-  "aiosqlite",                      # ✅ Fixes the error
-  "zeroconf>=0.132.2",
-  "jinja2",
-  "typing-extensions",
-  "setuptools",
-  "python-slugify",
-  "music-assistant-models>=1.1.0"
-  "shortuuid"
-]
+requires-python = ">=3.10"
 
-[project.urls]
-Homepage = "https://zingmusic.app"
-Repository = "https://github.com/Shwerzb/zingmusic-home-assistant-addon"
+dependencies = [
+    "aiohttp",
+    "aiofiles",
+    "aiosqlite",
+    "jinja2",
+    "shortuuid"
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["music_assistant", "zingmusic_provider"]
+include = ["music_assistant"]
