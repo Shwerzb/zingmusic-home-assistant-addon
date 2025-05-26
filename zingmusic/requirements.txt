@@ -1,0 +1,10 @@
+aiohttp
+aiofiles
+aiosqlite
+zeroconf
+jinja2
+typing-extensions
+setuptools
+python-slugify
+music-assistant-models
+shortuuid

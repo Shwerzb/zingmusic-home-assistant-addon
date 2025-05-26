@@ -1,32 +1,15 @@
-# Ignore Python cache and temporary files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.log
-
-# Ignore virtual environments
 env/
 venv/
-ENV/
-VENV/
-
-# Ignore Git files
+.DS_Store
 .git
 .gitignore
-
-# Ignore system files
-.DS_Store
-Thumbs.db
-
-# Ignore test data if any
 tests/
-*.test.*
-*.spec.*
-
-# Don't ignore essential files (make sure these are NOT excluded)
 !music_assistant/
 !zingmusic_provider/
-!pyproject.toml
-!requirements_all.txt
 !run.sh
+!requirements.txt
