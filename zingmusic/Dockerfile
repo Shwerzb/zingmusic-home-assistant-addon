@@ -4,12 +4,12 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install dependencies
-RUN apk add --no-cache python3 py3-pip bash curl jq
+RUN apk add --no-cache python3 py3-pip git curl bash jq
 
-# Install Music Assistant server
-RUN pip3 install music-assistant-server==2.5.2
+# Install Music Assistant server from GitHub
+RUN pip install git+https://github.com/music-assistant/server.git@v2.5.2
 
-# Copy custom ZingMusic provider
+# Copy ZingMusic provider
 COPY zingmusic_provider/ /app/music_assistant/providers/zingmusic/
 COPY zingmusic_provider/__init__.py /app/music_assistant/providers/__init__.py
 
