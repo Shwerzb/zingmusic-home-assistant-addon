@@ -1,21 +1,17 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM python:3.11-slim
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+WORKDIR /app
 
 # Install dependencies
-RUN apk add --no-cache python3 py3-pip bash curl git jq
+COPY pyproject.toml ./
+RUN pip install --no-cache-dir .
 
-# Copy Music Assistant server source (already unpacked locally)
-COPY music_assistant /app/music_assistant
+# Copy your full app code
+COPY ./music_assistant /app/music_assistant
+COPY ./zingmusic_provider /app/zingmusic_provider
+COPY run.sh /app/run.sh
 
-# Copy your custom ZingMusic provider
-COPY zingmusic_provider/ /app/music_assistant/providers/zingmusic/
-COPY zingmusic_provider/__init__.py /app/music_assistant/providers/__init__.py
+# Make run.sh executable
+RUN chmod +x /app/run.sh
 
-# Copy the run script
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
-
-# Set working directory and launch
-CMD [ "/run.sh" ]
+CMD ["/app/run.sh"]

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "music_assistant"
+version = "1.0.0"
+description = "ZingMusic version of Music Assistant"
+authors = [{ name="Shmiel Werzberger", email="you@example.com" }]
+dependencies = [
+    "aiohttp",
+    "aiofiles",
+    "zeroconf",
+    "music-assistant-models"
+]
+
+[tool.setuptools]
+packages = ["music_assistant"]
