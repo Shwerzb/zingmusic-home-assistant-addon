@@ -1,17 +1,22 @@
 FROM python:3.11-slim
 
+# Set work directory
 WORKDIR /app
 
-# Install dependencies
-COPY pyproject.toml ./
-RUN pip install --no-cache-dir .
+# Install build dependencies
+RUN pip install --no-cache-dir pip setuptools wheel
 
-# Copy your full app code
+# Copy full source before install
 COPY ./music_assistant /app/music_assistant
 COPY ./zingmusic_provider /app/zingmusic_provider
+COPY pyproject.toml ./  # must come after music_assistant is copied
 COPY run.sh /app/run.sh
+
+# Install the package (from the local source)
+RUN pip install --no-cache-dir .
 
 # Make run.sh executable
 RUN chmod +x /app/run.sh
 
+# Start the app
 CMD ["/app/run.sh"]

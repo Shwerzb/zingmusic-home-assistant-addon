@@ -1,18 +1,32 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "music_assistant"
+name = "zingmusic-assistant"
 version = "1.0.0"
-description = "ZingMusic version of Music Assistant"
-authors = [{ name="Shmiel Werzberger", email="you@example.com" }]
+description = "A custom Music Assistant server including the ZingMusic provider"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+  { name = "Shmiel Werzberger", email = "you@example.com" }
+]
 dependencies = [
-    "aiohttp",
-    "aiofiles",
-    "zeroconf",
-    "music-assistant-models"
+  "aiohttp>=3.8",
+  "aiofiles>=23.1",
+  "music-assistant-models>=1.1.0",
+  "zeroconf>=0.132.2",
+  "jinja2",
+  "typing-extensions",
+  "setuptools",
+  "python-slugify"
 ]
 
-[tool.setuptools]
-packages = ["music_assistant"]
+[project.urls]
+Homepage = "https://zingmusic.app"
+Repository = "https://github.com/Shwerzb/zingmusic-home-assistant-addon"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["music_assistant", "zingmusic_provider"]
