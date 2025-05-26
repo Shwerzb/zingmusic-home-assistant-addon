@@ -7,4 +7,3 @@ typing-extensions
 setuptools
 python-slugify
 shortuuid
-git+https://github.com/music-assistant/models.git
