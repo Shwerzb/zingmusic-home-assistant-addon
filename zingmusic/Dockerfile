@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
 
-# === Builder stage ===
 ARG BASE_IMAGE_VERSION=latest
 FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION AS builder
 
@@ -21,24 +20,23 @@ RUN uv pip install \
     --find-links "https://wheels.home-assistant.io/musllinux/" \
     dist/music_assistant-*.whl
 
-# Set broad permissions for HA Supervisor compatibility
+# Set full permissions for HA Supervisor compatibility
 RUN chmod -R 777 /app
 
-# === Final stage ===
+# === Final runtime container ===
 FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION
 
 ENV VIRTUAL_ENV=/app/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Copy installed app + venv from builder
+# Copy everything from builder
 COPY --from=builder /app /app
 
-# Copy entrypoint script
+# Copy startup script and fix permissions
 COPY run.sh /app/run.sh
-RUN chmod +x /app/run.sh
+RUN chmod +x /app/run.sh && dos2unix /app/run.sh || true
 
-# Set permissions again (dir only)
-RUN chmod 777 /app
+WORKDIR /app
 
 LABEL \
     io.hass.name="ZingMusic" \
@@ -49,5 +47,4 @@ LABEL \
 VOLUME [ "/data" ]
 EXPOSE 8095
 
-WORKDIR /app
 CMD [ "/app/run.sh" ]
