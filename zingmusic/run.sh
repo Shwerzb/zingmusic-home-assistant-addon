@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-echo "🔊 Starting ZingMusic (custom MA server)..."
-python3 -m music_assistant.server
+echo "🔊 Starting Music Assistant with ZingMusic provider..."
+python3 /app/music_assistant/server.py
