@@ -1,27 +1,20 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install dependencies
-RUN apk add --no-cache \
-    python3 \
-    py3-pip \
-    bash \
-    curl \
-    jq
+RUN apk add --no-cache python3 py3-pip bash curl jq
 
-# Optional: install additional Python packages
-# RUN pip3 install -r /requirements.txt
+# Install Music Assistant server
+RUN pip3 install music-assistant==2.5.2
 
-# Copy ZingMusic provider files
+# Copy ZingMusic provider
 COPY zingmusic_provider/ /app/music_assistant/providers/zingmusic/
 COPY zingmusic_provider/__init__.py /app/music_assistant/providers/__init__.py
 
-# Copy entry script
+# Entry script
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-# Set entrypoint
 CMD [ "/run.sh" ]
