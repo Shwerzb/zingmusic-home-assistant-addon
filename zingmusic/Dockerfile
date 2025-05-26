@@ -3,48 +3,47 @@
 ARG BASE_IMAGE_VERSION=latest
 FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION AS builder
 
+# Workdir for wheel install
 WORKDIR /app
 
-# Add your prebuilt wheel
-ADD dist dist
+# Copy wheel and requirements
+COPY dist/*.whl /app/music_assistant.whl
+COPY requirements_all.txt .
 
-# Ensure UV is available for fast pip installs
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
-# Create virtual environment
-ENV VIRTUAL_ENV=/app/venv
-RUN uv venv $VIRTUAL_ENV
-
-# Install your ZingMusic-enabled Music Assistant wheel
+# Install dependencies using uv (already in base image)
 RUN uv pip install \
     --find-links "https://wheels.home-assistant.io/musllinux/" \
-    dist/music_assistant-*.whl
+    -r requirements_all.txt && \
+    uv pip install \
+    --no-cache \
+    --find-links "https://wheels.home-assistant.io/musllinux/" \
+    /app/music_assistant.whl
 
-# Set full permissions for HA Supervisor compatibility
 RUN chmod -R 777 /app
 
-# === Final runtime container ===
+#####################################################################
+
+# Final image
 FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION
-
-ENV VIRTUAL_ENV=/app/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Copy everything from builder
-COPY --from=builder /app /app
-
-# Copy startup script and fix permissions
-COPY run.sh /app/run.sh
-RUN chmod +x /app/run.sh && dos2unix /app/run.sh || true
 
 WORKDIR /app
 
-LABEL \
-    io.hass.name="ZingMusic" \
-    io.hass.description="ZingMusic Add-on for Music Assistant" \
-    io.hass.version="1.0.0" \
-    io.hass.type="addon"
+# Copy full /app including venv
+COPY --from=builder /app /app
 
-VOLUME [ "/data" ]
+# Add and allow run.sh
+COPY run.sh /app/run.sh
+RUN chmod +x /app/run.sh
+
+ENV PATH="/app/venv/bin:$PATH"
+
+# Set labels
+LABEL \
+    org.opencontainers.image.title="ZingMusic Add-on" \
+    org.opencontainers.image.description="Music Assistant with ZingMusic provider" \
+    org.opencontainers.image.source="https://github.com/Shwerzb/zingmusic-home-assistant-addon"
+
+VOLUME ["/data"]
 EXPOSE 8095
 
-CMD [ "/app/run.sh" ]
+CMD ["/app/run.sh"]

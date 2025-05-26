@@ -18,6 +18,9 @@ dependencies = [
     "shortuuid"
 ]
 
+[project.scripts]
+music-assistant = "music_assistant.__main__:main"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["music_assistant"]
