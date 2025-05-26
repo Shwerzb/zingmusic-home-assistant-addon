@@ -3,7 +3,6 @@ FROM ${BUILD_FROM}
 
 ENV PYTHONUNBUFFERED=1
 
-# Install build tools & libs
 RUN apk add --no-cache \
     python3-dev build-base libffi-dev openssl-dev ffmpeg
 
@@ -14,7 +13,6 @@ COPY requirements.txt /app/requirements.txt
 COPY music_assistant /app/music_assistant
 COPY zingmusic_provider /app/zingmusic_provider
 
-# ✅ This will now work because pip exists in this image
 RUN pip install --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
