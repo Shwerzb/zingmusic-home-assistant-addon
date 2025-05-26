@@ -3,33 +3,29 @@
 ARG BASE_IMAGE_VERSION=latest
 FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION AS builder
 
-# Add your wheel + requirements
-ADD dist dist
 COPY requirements_all.txt .
+COPY music_assistant /app/music_assistant
+COPY zingmusic_provider /app/zingmusic_provider
 
-# Install uv
+# ensure UV is installed
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Create venv
+# create venv
 ENV VIRTUAL_ENV=/app/venv
 RUN uv venv $VIRTUAL_ENV
 
-# Install requirements into venv
+# install requirements
 RUN uv pip install \
     --find-links "https://wheels.home-assistant.io/musllinux/" \
     -r requirements_all.txt
 
-# Install your custom Music Assistant wheel (with ZingMusic integrated)
-ARG MASS_VERSION
-RUN uv pip install \
-    --no-cache \
-    --find-links "https://wheels.home-assistant.io/musllinux/" \
-    "music-assistant@dist/music_assistant-${MASS_VERSION}-py3-none-any.whl"
+# install music assistant directly from source
+RUN uv pip install /app/music_assistant
 
-# Set permissions
 RUN chmod -R 777 /app
 
-# FINAL STAGE
+##################################################################################################
+
 FROM ghcr.io/music-assistant/base:$BASE_IMAGE_VERSION
 
 ENV VIRTUAL_ENV=/app/venv
