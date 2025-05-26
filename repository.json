@@ -1,6 +1,5 @@
 {
   "name": "ZingMusic Add-ons",
   "url": "https://github.com/Shwerzb/zingmusic-home-assistant-addon",
-  "maintainer": "Shmily Werzberger",
-  "addons": ["zingmusic"]
+  "maintainer": "Shmily Werzberger"
 }
