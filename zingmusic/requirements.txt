@@ -1,9 +1,5 @@
 aiohttp
 aiofiles
 aiosqlite
-zeroconf
 jinja2
-typing-extensions
-setuptools
-python-slugify
 shortuuid

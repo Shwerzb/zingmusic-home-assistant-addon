@@ -3,7 +3,7 @@ FROM ${BUILD_FROM}
 
 ENV PYTHONUNBUFFERED=1
 
-# Install Python + Pip + build deps
+# Install Python + pip + build tools
 RUN apk add --no-cache \
     python3 py3-pip \
     python3-dev build-base \
@@ -13,14 +13,15 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 # Copy files
-COPY music_assistant /app/music_assistant
-COPY zingmusic_provider /app/zingmusic_provider
 COPY requirements.txt /app/requirements.txt
 COPY run.sh /app/run.sh
+COPY music_assistant /app/music_assistant
+COPY zingmusic_provider /app/zingmusic_provider
 
 # Install Python dependencies
+RUN pip install --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Final setup
+# Start
 RUN chmod +x /app/run.sh
 CMD ["/app/run.sh"]
