@@ -3,23 +3,31 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
+*.egg-info/
 
+# Ignore virtual environments
 env/
 venv/
 ENV/
 VENV/
 
+# Ignore Git
 .git
 .gitignore
+
+# Ignore system files
 .DS_Store
 Thumbs.db
+
+# Ignore test data
 tests/
 *.test.*
 *.spec.*
 
-# Explicitly include needed dirs
-!music_assistant/
-!zingmusic_provider/
-!requirements_all.txt
+# Only allow needed files
 !dist/
 !dist/*
+!run.sh
+!Dockerfile
+!requirements_all.txt
+!pyproject.toml
