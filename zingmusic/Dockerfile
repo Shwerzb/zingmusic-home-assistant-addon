@@ -3,25 +3,18 @@ FROM ${BUILD_FROM}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install required packages
-RUN apk add --no-cache \
-    python3 \
-    py3-pip \
-    git \
-    bash \
-    curl \
-    jq
+# Install dependencies
+RUN apk add --no-cache python3 py3-pip bash curl git jq
 
-# Install Music Assistant server from GitHub (main branch)
-RUN pip install git+https://github.com/music-assistant/server.git@main
+# Copy Music Assistant server code
+COPY music_assistant_server/ /app/music_assistant/
 
-# Copy custom ZingMusic provider into the container
+# Copy your ZingMusic provider into the server
 COPY zingmusic_provider/ /app/music_assistant/providers/zingmusic/
 COPY zingmusic_provider/__init__.py /app/music_assistant/providers/__init__.py
 
-# Copy and configure the run script
+# Copy entry script
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-# Start the Music Assistant server
 CMD [ "/run.sh" ]
