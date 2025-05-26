@@ -14,8 +14,9 @@ Thumbs.db
 tests/
 
 !dist/
-!dist/*
+!dist/*.whl
 !run.sh
 !Dockerfile
 !requirements_all.txt
 !pyproject.toml
+
