@@ -6,8 +6,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install dependencies
 RUN apk add --no-cache python3 py3-pip git curl bash jq
 
-# Install Music Assistant server from GitHub
-RUN pip install git+https://github.com/music-assistant/server.git@v2.5.2
+# Install Music Assistant server from GitHub (stable branch)
+RUN pip install git+https://github.com/music-assistant/server.git@stable
 
 # Copy ZingMusic provider
 COPY zingmusic_provider/ /app/music_assistant/providers/zingmusic/
