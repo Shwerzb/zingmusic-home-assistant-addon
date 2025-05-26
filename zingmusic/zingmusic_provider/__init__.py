@@ -10,11 +10,4 @@ from .zingmusic import ZingMusicProvider  # 👈 your provider
 
 PROVIDERS: list[type[MusicProvider]] = [
     ZingMusicProvider,  # 👈 register here
-    FilesystemProvider,
-    RadioBrowserProvider,
-    ShoutcastProvider,
-    TuneInProvider,
-    # QobuzProvider,
-    # SpotifyProvider,
-    # YTMusicProvider,
 ]
