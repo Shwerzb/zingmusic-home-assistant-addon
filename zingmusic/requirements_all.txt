@@ -3,3 +3,4 @@ aiofiles
 aiosqlite
 jinja2
 shortuuid
+shortuuid>=1.0.11
