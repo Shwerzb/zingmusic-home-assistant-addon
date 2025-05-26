@@ -3,30 +3,27 @@ FROM ${BUILD_FROM}
 
 ENV PYTHONUNBUFFERED=1
 
-# ✅ Install Python 3, pip, and required build tools
+# ✅ Install Python and all required tools
 RUN apk add --no-cache \
     python3 py3-pip \
     python3-dev build-base \
-    libffi-dev openssl-dev \
-    ffmpeg
+    libffi-dev openssl-dev ffmpeg
 
 # ✅ Set working directory
 WORKDIR /app
 
-# ✅ Copy code and install dependencies
+# ✅ Copy everything
 COPY run.sh /app/run.sh
 COPY requirements.txt /app/requirements.txt
 COPY music_assistant /app/music_assistant
 COPY zingmusic_provider /app/zingmusic_provider
 
-# ✅ Upgrade pip/tools (only after installing pip above)
+# ✅ Upgrade pip, setuptools, wheel
 RUN pip install --upgrade pip setuptools wheel
 
-# ✅ Install Python deps
+# ✅ Install Python dependencies
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# ✅ Make startup script executable
+# ✅ Make the script executable and run
 RUN chmod +x /app/run.sh
-
-# ✅ Start the app
 CMD ["/app/run.sh"]
