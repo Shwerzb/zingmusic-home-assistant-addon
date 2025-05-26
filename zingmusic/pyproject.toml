@@ -22,6 +22,7 @@ dependencies = [
   "setuptools",
   "python-slugify",
   "music-assistant-models>=1.1.0"
+  "shortuuid"
 ]
 
 [project.urls]
